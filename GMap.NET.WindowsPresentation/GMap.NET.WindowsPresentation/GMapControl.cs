@@ -230,7 +230,7 @@ namespace GMap.NET.WindowsPresentation
       /// <summary>
       /// text on empty tiles
       /// </summary>
-      public FormattedText EmptyTileText = new FormattedText("We are sorry, but we don't\nhave imagery at this zoom\n     level for this region.", System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, new Typeface("Arial"), 16, Brushes.Blue);
+      public FormattedText EmptyTileText = new FormattedText("此区域暂无地图 \n-_-b.", System.Globalization.CultureInfo.CurrentUICulture, FlowDirection.LeftToRight, new Typeface("Arial"), 16, Brushes.Blue);
 
       /// <summary>
       /// map zooming type for mouse wheel
@@ -253,7 +253,7 @@ namespace GMap.NET.WindowsPresentation
       /// map dragg button
       /// </summary>
       [Category("GMap.NET")]
-      public MouseButton DragButton = MouseButton.Right;
+      public MouseButton DragButton = MouseButton.Left;
 
       /// <summary>
       /// use circle for selection

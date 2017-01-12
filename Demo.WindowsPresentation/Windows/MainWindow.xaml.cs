@@ -458,6 +458,19 @@ namespace Demo.WindowsPresentation
       {
          System.Windows.Point p = e.GetPosition(MainMap);
          currentMarker.Position = MainMap.FromLocalToLatLng((int)p.X, (int)p.Y);
+         GMapMarker marker;
+         marker.Position = currentMarker.Position;
+         var shape = (marker.Shape as CircleVisual);
+         {
+             shape.Text = d.Line;
+             shape.Angle = d.Bearing;
+             shape.Tooltip.SetValues("Bus", d);
+
+             if (shape.IsChanged)
+             {
+                 shape.UpdateVisual(false);
+             }
+         }
       }
 
       // move current marker with left holding
