@@ -458,14 +458,15 @@ namespace Demo.WindowsPresentation
       {
          System.Windows.Point p = e.GetPosition(MainMap);
          currentMarker.Position = MainMap.FromLocalToLatLng((int)p.X, (int)p.Y);
-         GMapMarker marker;
+         GMapMarker marker = new GMapMarker();
          marker.Position = currentMarker.Position;
+         marker.Shape = new CircleVisual(marker, Brushes.Red);
          var shape = (marker.Shape as CircleVisual);
          {
-             shape.Text = d.Line;
-             shape.Angle = d.Bearing;
-             shape.Tooltip.SetValues("Bus", d);
-
+             shape.Text = "test";
+             shape.Angle = 90;
+             shape.Tooltip.SetValues("Bus", new VehicleData());
+             MainMap.Markers.Add(marker);
              if (shape.IsChanged)
              {
                  shape.UpdateVisual(false);
@@ -800,7 +801,7 @@ namespace Demo.WindowsPresentation
       // adds route
       private void button12_Click(object sender, RoutedEventArgs e)
       {
-         MapRoute route = GMaps.Instance.GetRouteBetweenPoints(start, end, false, (int)MainMap.Zoom);
+          MapRoute route = new MapRoute(new List<PointLatLng>{start,end},"test");
          if(route != null)
          {
             GMapMarker m1 = new GMapMarker(start);
