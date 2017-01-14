@@ -39,7 +39,8 @@
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>sn.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup>
@@ -113,6 +114,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CustomMarkers\PropagationCircle.cs" />
     <Compile Include="Windows\Message.xaml.cs">
       <DependentUpon>Message.xaml</DependentUpon>
     </Compile>
@@ -208,7 +210,6 @@
   <ItemGroup>
     <None Include="Properties\app.manifest" />
     <None Include="Resources\ImageReady.ico" />
-    <None Include="sn.snk" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="CustomMarkers\bigMarkerGreen.png" />

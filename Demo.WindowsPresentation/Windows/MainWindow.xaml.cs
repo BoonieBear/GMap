@@ -460,12 +460,10 @@ namespace Demo.WindowsPresentation
          currentMarker.Position = MainMap.FromLocalToLatLng((int)p.X, (int)p.Y);
          GMapMarker marker = new GMapMarker();
          marker.Position = currentMarker.Position;
-         marker.Shape = new CircleVisual(marker, Brushes.Red);
-         var shape = (marker.Shape as CircleVisual);
+         marker.Shape = new PropagationCircle(marker, Brushes.Red);
+         var shape = (marker.Shape as PropagationCircle);
          {
              shape.Text = "test";
-             shape.Angle = 90;
-             shape.Tooltip.SetValues("Bus", new VehicleData());
              MainMap.Markers.Add(marker);
              if (shape.IsChanged)
              {

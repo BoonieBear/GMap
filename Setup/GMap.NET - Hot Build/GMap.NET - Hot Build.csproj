@@ -18,9 +18,10 @@
     <ManifestKeyFile>MyPFX.pfx</ManifestKeyFile>
     <GenerateManifests>true</GenerateManifests>
     <TargetZone>Custom</TargetZone>
-    <SignManifests>true</SignManifests>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>MyPFX.pfx</AssemblyOriginatorKeyFile>
+    <SignManifests>false</SignManifests>
+    <SignAssembly>false</SignAssembly>
+    <AssemblyOriginatorKeyFile>
+    </AssemblyOriginatorKeyFile>
     <StartupObject>
     </StartupObject>
     <FileUpgradeFlags>
@@ -133,7 +134,6 @@
       <DesignTime>True</DesignTime>
     </Compile>
     <None Include="app.config" />
-    <None Include="MyPFX.pfx" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -147,7 +147,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\logo99.png" />
-    <None Include="sn.snk" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="..\..\references\windows\x64\System.Data.SQLite.DLL">
