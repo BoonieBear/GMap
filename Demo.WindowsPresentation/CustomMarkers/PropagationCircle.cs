@@ -6,6 +6,7 @@ using System.Text;
 using System.Windows;
 using System.Windows.Controls.Primitives;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Effects;
 using Demo.WindowsPresentation.Controls;
 using GMap.NET.WindowsPresentation;
@@ -31,12 +32,13 @@ namespace Demo.WindowsPresentation.CustomMarkers
 
             Text = "?";
 
-            StrokeArrow.EndLineCap = PenLineCap.Triangle;
-            StrokeArrow.LineJoin = PenLineJoin.Round;
+            myPen.DashCap = PenLineCap.Round;
+            myPen.DashStyle = new DashStyle(new Double[] { 4.0F, 2.0F, 1.0F, 3.0F },0.0);
+            myPen.Thickness = 2;
 
             RenderTransform = scale;
 
-            Width = Height = 1;
+            Width = Height = 10;
 
             Background = background;
 
@@ -44,7 +46,7 @@ namespace Demo.WindowsPresentation.CustomMarkers
 
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
-            UpdateVisual(true);
+            //UpdateVisual(true);
         }
 
         private void PropagationCircle_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -53,7 +55,8 @@ namespace Demo.WindowsPresentation.CustomMarkers
             scale.CenterX = -Marker.Offset.X;
             scale.CenterY = -Marker.Offset.Y;
         }
-        readonly ScaleTransform scale = new ScaleTransform(1, 1);
+        private ScaleTransform scale = new ScaleTransform(1, 1);
+        private DrawinFx dv = null;
         public DropShadowEffect ShadowEffect;
 
         static readonly Typeface Font = new Typeface(new FontFamily("Arial"), FontStyles.Normal, FontWeights.Bold, FontStretches.Normal);
@@ -112,22 +115,8 @@ namespace Demo.WindowsPresentation.CustomMarkers
             }
         }
         public bool IsChanged = true;
-        private Pen strokeArrow = new Pen(Brushes.Blue, 2.0);
-        public Pen StrokeArrow
-        {
-            get
-            {
-                return strokeArrow;
-            }
-            set
-            {
-                if (strokeArrow != value)
-                {
-                    strokeArrow = value;
-                    IsChanged = true;
-                }
-            }
-        }
+        private Pen myPen = new Pen(Brushes.Blue, 2.0);
+
 
         public double FontSize = 16;
         void ForceUpdateText()
@@ -196,18 +185,43 @@ namespace Demo.WindowsPresentation.CustomMarkers
             return false;
         }
 
+        public void Action(string text,TimeSpan ts)
+        {
+            countCreate++;
+            FText = new FormattedText(text, CultureInfo.InvariantCulture, FlowDirection.LeftToRight, Font, FontSize, Foreground);
+            DoubleAnimation myAnimation =
+                new DoubleAnimation(
+                    10, // "From" value
+                    50, // "To" value 
+                    TimeSpan.FromMilliseconds(1000)
+                );
+            //myAnimation.AutoReverse = true;
+
+            // Create a clock the for the animation.
+            AnimationClock myClock = myAnimation.CreateClock();
+            var square = new DrawinFx();
+            using (DrawingContext dc = square.RenderOpen())
+            {
+                dc.DrawEllipse(null, Stroke, new Point(Width / 2, Height / 2), Width / 2 + Stroke.Thickness / 2, Height / 2 + Stroke.Thickness / 2);
+                dc.DrawEllipse(Background, null, new Point(Width / 2, Height / 2), Width / 2, Height / 2);
+                dc.DrawEllipse(null, myPen, new Point(Width / 2, Height / 2), null, Width / 2, myClock, Height / 2, myClock);
+                dc.DrawEllipse(null, myPen, new Point(Width / 2, Height / 2), null, Width / 2, myClock, Height / 2, myClock);
+                dc.DrawText(FText, new Point(100, 100));
+            }
+            Child = square;
+        }
         int countCreate = 0;
         private DrawingVisual Create()
         {
             countCreate++;
 
             var square = new DrawinFx();
-
+           
             using (DrawingContext dc = square.RenderOpen())
             {
                 dc.DrawEllipse(null, Stroke, new Point(Width / 2, Height / 2), Width / 2 + Stroke.Thickness / 2, Height / 2 + Stroke.Thickness / 2);
-                dc.DrawEllipse(Background, null, new Point(Width / 2, Height / 2), Width / 2, Height / 2);
-                dc.DrawText(FText, new Point(Width / 2 , Height / 2 ));
+                dc.DrawEllipse(Background, null, new Point(Width / 2, Height / 2), Width / 2,  Height / 2);
+                dc.DrawText(FText, new Point(0 , 0 ));
             }
 
             return square;

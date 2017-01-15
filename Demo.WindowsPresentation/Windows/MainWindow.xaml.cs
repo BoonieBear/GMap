@@ -465,10 +465,8 @@ namespace Demo.WindowsPresentation
          {
              shape.Text = "test";
              MainMap.Markers.Add(marker);
-             if (shape.IsChanged)
-             {
-                 shape.UpdateVisual(false);
-             }
+             shape.UpdateVisual(true);
+             shape.Action("123243245",TimeSpan.FromMilliseconds(1000));
          }
       }
 
