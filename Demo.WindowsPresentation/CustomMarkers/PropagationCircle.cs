@@ -35,6 +35,7 @@ namespace Demo.WindowsPresentation.CustomMarkers
             myPen.DashCap = PenLineCap.Round;
             myPen.DashStyle = new DashStyle(new Double[] { 4.0F, 2.0F, 1.0F, 3.0F },0.0);
             myPen.Thickness = 2;
+            myPen.Freeze();
 
             RenderTransform = scale;
 
@@ -185,17 +186,17 @@ namespace Demo.WindowsPresentation.CustomMarkers
             return false;
         }
 
-        public void Action(string text,TimeSpan ts)
+        public void Action(string text,float radius,TimeSpan ts)
         {
             countCreate++;
             FText = new FormattedText(text, CultureInfo.InvariantCulture, FlowDirection.LeftToRight, Font, FontSize, Foreground);
-            DoubleAnimation myAnimation =
-                new DoubleAnimation(
-                    10, // "From" value
-                    50, // "To" value 
-                    TimeSpan.FromMilliseconds(1000)
-                );
-            //myAnimation.AutoReverse = true;
+            DoubleAnimationUsingKeyFrames myAnimation =new DoubleAnimationUsingKeyFrames();
+            var keyFrames = myAnimation.KeyFrames;
+            keyFrames.Add(new SplineDoubleKeyFrame(0, TimeSpan.FromSeconds(0)));
+            keyFrames.Add(new SplineDoubleKeyFrame(radius, TimeSpan.FromSeconds(0.5), new KeySpline(0, 0, 1, 1)));
+            keyFrames.Add(new SplineDoubleKeyFrame(0, TimeSpan.FromSeconds(0.5)));
+            myAnimation.RepeatBehavior =new RepeatBehavior(ts);
+            //myAnimation.Duration = ts;
 
             // Create a clock the for the animation.
             AnimationClock myClock = myAnimation.CreateClock();
@@ -205,8 +206,8 @@ namespace Demo.WindowsPresentation.CustomMarkers
                 dc.DrawEllipse(null, Stroke, new Point(Width / 2, Height / 2), Width / 2 + Stroke.Thickness / 2, Height / 2 + Stroke.Thickness / 2);
                 dc.DrawEllipse(Background, null, new Point(Width / 2, Height / 2), Width / 2, Height / 2);
                 dc.DrawEllipse(null, myPen, new Point(Width / 2, Height / 2), null, Width / 2, myClock, Height / 2, myClock);
-                dc.DrawEllipse(null, myPen, new Point(Width / 2, Height / 2), null, Width / 2, myClock, Height / 2, myClock);
-                dc.DrawText(FText, new Point(100, 100));
+                
+                dc.DrawText(FText, new Point(-FText.Width/2, -FText.Height));
             }
             Child = square;
         }

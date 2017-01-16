@@ -466,7 +466,7 @@ namespace Demo.WindowsPresentation
              shape.Text = "test";
              MainMap.Markers.Add(marker);
              shape.UpdateVisual(true);
-             shape.Action("123243245",TimeSpan.FromMilliseconds(1000));
+             shape.Action("123243245",100,TimeSpan.FromMilliseconds(10000));
          }
       }
 
