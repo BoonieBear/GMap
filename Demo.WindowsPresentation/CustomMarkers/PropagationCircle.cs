@@ -220,8 +220,9 @@ namespace Demo.WindowsPresentation.CustomMarkers
            
             using (DrawingContext dc = square.RenderOpen())
             {
-                dc.DrawEllipse(null, Stroke, new Point(Width / 2, Height / 2), Width / 2 + Stroke.Thickness / 2, Height / 2 + Stroke.Thickness / 2);
-                dc.DrawEllipse(Background, null, new Point(Width / 2, Height / 2), Width / 2,  Height / 2);
+                //dc.DrawEllipse(null, Stroke, new Point(Width / 2, Height / 2), Width / 2 + Stroke.Thickness / 2, Height / 2 + Stroke.Thickness / 2);
+                //dc.DrawEllipse(Background, null, new Point(Width / 2, Height / 2), Width / 2,  Height / 2);
+                dc.DrawImage(new ImageSource());
                 dc.DrawText(FText, new Point(0 , 0 ));
             }
 

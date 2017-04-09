@@ -831,7 +831,7 @@ namespace GMap.NET.WindowsPresentation
 
             myPath.Effect = ef;
 
-            myPath.Stroke = Brushes.Navy;
+            myPath.Stroke = Brushes.WhiteSmoke;
             myPath.StrokeThickness = 5;
             myPath.StrokeLineJoin = PenLineJoin.Round;
             myPath.StrokeStartLineCap = PenLineCap.Triangle;
